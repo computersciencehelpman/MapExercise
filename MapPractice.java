@@ -11,7 +11,9 @@ public class MapPractice {
 
     public static void main(String[] args) {
         String fileName = "PokerHands.csv";
-        Map<String, Integer> flush = ReadPokerHands(fileName);
+       Map<String, Integer> flush;
+        MapPractice.ReadPokerHands(fileName);
+       
        
     }
 
@@ -34,36 +36,27 @@ public class MapPractice {
         }
         System.out.println(flush);
         
-     // create new BufferedWriter for the output file
-    	BufferedWriter bf = new BufferedWriter(new FileWriter(fileName));
+   
         
          //Write the flush count to a new CSV file
         try (FileWriter writer = new FileWriter(fileName)) {
           
-        	
+        	  // create new BufferedWriter for the output file
+    	BufferedWriter bf = new BufferedWriter(new FileWriter(fileName));
         	
         	// loop through flush map and at each iteration write to file 
-        	for(Map.Entry<String, Integer> flush : flush.entrySet()) {
-        		bf.write(flush.getKey() + ":" + flush.getValue());
+        	for(Map.Entry<String, Integer> flushes : flush.entrySet()) {
+        		bf.write(flushes.getKey() + ":" + flushes.getValue());
         		
         		// new line
         		bf.newLine();
         	}
         	bf.flush();
+        	bf.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        finally {
-        	
-        	try {
-        		
-        		//always close the writer
-        		bf.close();
-        	}
-        	catch(Exception e) {
-        		
-        	}
-        }
+      
 
         return flush;
     }
